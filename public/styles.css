@@ -10,15 +10,20 @@ body {
   background-color: #fff;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* Add border radius */
 }
 
 h1,
 h2 {
   color: #333;
+  text-align: center; /* Center the headings */
 }
 
 form {
   margin-bottom: 20px;
+  display: flex; /* Make the form a flex container */
+  flex-direction: column; /* Stack the form elements vertically */
+  align-items: center; /* Center the form elements */
 }
 
 label {
@@ -28,9 +33,10 @@ label {
 }
 
 input {
-  width: calc(100% - 20px);
+  width: 80%; /* Reduce the width */
   padding: 8px;
   margin-bottom: 10px;
+  border-radius: 5px; /* Add border radius */
 }
 
 button {
@@ -39,6 +45,12 @@ button {
   background-color: #333;
   color: #fff;
   border: none;
+  border-radius: 5px; /* Add border radius */
+  transition: background-color 0.3s ease; /* Add transition */
+}
+
+button:hover {
+  background-color: #555; /* Change color on hover */
 }
 
 table {
@@ -61,8 +73,10 @@ th {
 
 a {
   text-decoration: none;
+  color: #333; /* Change link color */
 }
 
 a:hover {
   text-decoration: underline;
+  color: #555; /* Change link color on hover */
 }

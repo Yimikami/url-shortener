@@ -36,7 +36,7 @@ app.listen(process.env.PORT, () => {
 
 app.post("/shorten", async (req, res) => {
   try {
-    const url = new Url({ fullUrl: req.body.fullUrl , name: req.body.name});
+    const url = new Url({ fullUrl: req.body.fullUrl, name: req.body.name });
     await url.save();
     res.redirect("/");
   } catch (error) {
@@ -53,20 +53,19 @@ app.get("/", async (req, res) => {
   }
 });
 
-
-app.get('/:shortUrl', async (req, res) => {
+app.get("/:shortUrl", async (req, res) => {
   try {
     const shortUrl = req.params.shortUrl;
     const url = await Url.findOne({ shortUrl });
     if (!url) {
-      return res.status(400).send('URL not found');
+      return res.status(400).send("URL not found");
     }
- // Increment the click count and save the updated URL
+    // Increment the click count and save the updated URL
     url.clicks++;
     url.save();
     res.redirect(url.fullUrl);
   } catch (error) {
-    res.status(500).send('URL not found');
+    res.status(500).send("URL not found");
   }
 });
 
@@ -77,13 +76,29 @@ app.post("/update/:shortUrl", async (req, res) => {
     const url = await Url.findOne({ shortUrl });
 
     if (!url) {
-      return res.status(400).send('URL not found');
+      return res.status(400).send("URL not found");
     }
 
     url.fullUrl = newFullUrl;
     await url.save();
-    res.send('URL updated successfully');
+    res.redirect("/");
   } catch (error) {
-    res.status(500).send('Error updating URL');
+    // detailed error message
+    res.status(500).send("Error updating URL" + error.message);
+  }
+});
+
+app.post("/delete/:shortUrl", async (req, res) => {
+  try {
+    const shortUrl = req.params.shortUrl;
+    const result = await Url.deleteOne({ shortUrl });
+
+    if (result.deletedCount === 0) {
+      return res.status(400).send("URL not found");
+    }
+
+    res.redirect("/");
+  } catch (error) {
+    res.status(500).send("Error deleting URL" + error.message);
   }
 });

@@ -12,6 +12,7 @@ const urlSchema = new mongoose.Schema({
     type: String,
     required: true,
     default: shortId.generate,
+    unique: true,
   },
  clicks: {
     type: Number,
@@ -23,5 +24,7 @@ const urlSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+
 
 module.exports = mongoose.model('urlModel', urlSchema);
