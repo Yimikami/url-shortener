@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const Url = require("./models/urlModel");
 const app = express();
+const shortId = require("shortid");
+const QRCode = require("qrcode");
 
 dotenv.config();
 
@@ -36,7 +38,22 @@ app.listen(process.env.PORT, () => {
 
 app.post("/shorten", async (req, res) => {
   try {
-    const url = new Url({ fullUrl: req.body.fullUrl, name: req.body.name });
+    let shortUrl;
+
+    if (req.body.shortUrl) {
+      shortUrl = req.body.shortUrl;
+    } else {
+      shortUrl = shortId.generate();
+    }
+    const url = new Url({
+      fullUrl: req.body.fullUrl,
+      name: req.body.name,
+      shortUrl: shortUrl,
+    });
+
+    const qrCodeUrl = await QRCode.toDataURL(process.env.BASE_URL + shortUrl);
+    url.qrCode = qrCodeUrl;
+
     await url.save();
     res.redirect("/");
   } catch (error) {
@@ -100,5 +117,24 @@ app.post("/delete/:shortUrl", async (req, res) => {
     res.redirect("/");
   } catch (error) {
     res.status(500).send("Error deleting URL" + error.message);
+  }
+});
+
+app.get("/qrcode/:shortUrl", async (req, res) => {
+  try {
+    const { shortUrl } = req.params;
+    const url = await Url.findOne({ shortUrl });
+
+    if (!url) {
+      return res.status(400).send("URL not found");
+    }
+
+    const qrCodeUrl = await QRCode.toDataURL(process.env.BASE_URL + shortUrl);
+    url.qrCode = qrCodeUrl;
+    await url.save();
+
+    res.json({ qrCodeUrl });
+  } catch (error) {
+    res.status(500).send("Error generating QR Code: " + error.message);
   }
 });

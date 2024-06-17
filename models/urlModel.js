@@ -1,6 +1,5 @@
 // Importing necessary libraries
-const mongoose = require('mongoose');
-const shortId = require('shortid');
+const mongoose = require("mongoose");
 
 // Defining a structure for the data we want to store in the database
 const urlSchema = new mongoose.Schema({
@@ -11,10 +10,12 @@ const urlSchema = new mongoose.Schema({
   shortUrl: {
     type: String,
     required: true,
-    default: shortId.generate,
     unique: true,
   },
- clicks: {
+  qrCode: {
+    type: String,
+  },
+  clicks: {
     type: Number,
     required: true,
     default: 0,
@@ -25,6 +26,4 @@ const urlSchema = new mongoose.Schema({
   },
 });
 
-
-
-module.exports = mongoose.model('urlModel', urlSchema);
+module.exports = mongoose.model("urlModel", urlSchema);
