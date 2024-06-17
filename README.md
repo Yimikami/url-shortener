@@ -36,14 +36,13 @@ This is a web application that allows users to shorten URLs and manage them effi
    - Update the `MONGODB_URI` variable with your MongoDB connection string.
     - Update the `BASE_URL` variable with the base URL of your application.
     - Update the `PORT` variable with the port number you want the application to run on.
-     ```
 
 4. Start the application:
    ```bash
    npm start
    ```
 
-5. Access the application in your web browser at `http://localhost:3000`.
+5. Access the application in your web browser at `http://localhost:{PORT}`.
 
 ## Usage
 
