@@ -21,23 +21,27 @@ This is a web application that allows users to shorten URLs and manage them effi
 ## Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/Yimikami/url-shortener
    cd url-shortener
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
 
 3. Set up environment variables:
+
    - Change the name of the `.env.example` file to `.env`.
    - Update the `MONGODB_URI` variable with your MongoDB connection string.
-    - Update the `BASE_URL` variable with the base URL of your application.
-    - Update the `PORT` variable with the port number you want the application to run on.
+   - Update the `BASE_URL` variable with the base URL of your application.
+   - Update the `PORT` variable with the port number you want the application to run on.
 
 4. Start the application:
+
    ```bash
    npm start
    ```
